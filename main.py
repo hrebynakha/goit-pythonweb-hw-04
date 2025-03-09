@@ -2,9 +2,11 @@
 import argparse
 import os
 from pathlib import Path
-import shutil
 import hashlib
 import logging
+import asyncio
+from aiopath import AsyncPath
+from aioshutil import copyfile
 
 logging.basicConfig(
     format="%(asctime)s %(levelname)s %(message)s",
@@ -46,7 +48,7 @@ class FileCopy:
         if not os.path.exists(self.dest):
             self.dest.mkdir(parents=True, exist_ok=False)
 
-    def check_hash(file):
+    def check_hash(self, file):
         """Checking file hash to allow duplicates name copy"""
         with open(file, 'rb') as file_to_check:
             data = file_to_check.read()
@@ -54,18 +56,22 @@ class FileCopy:
         return md5
 
     @handle_error
-    def copy_file(self, file):
+    async def copy_file(self, file):
         """Copy file from path to dest path"""
-        pass
+        apath = AsyncPath("hello.txt")
+        if await apath.exists():
+            new_path = AsyncPath('logs')
+            await new_path.mkdir(exist_ok=True, parents=True)
+            await copyfile(apath, new_path / apath)
 
 
     @handle_error
-    def read_folder(self, ):
+    async def read_folder(self, ):
         """Make copies for files and sort by extentios"""
         pass
 
     @handle_error
-    def make_copy(self, ):
+    async def make_copy(self, ):
         """Make copies for files and sort by extentios"""
         pass
     
