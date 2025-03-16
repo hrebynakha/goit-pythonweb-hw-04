@@ -160,7 +160,7 @@ class FileCopyManager:
         self,
     ):
         """Show stat for files"""
-        print(f"\rTotal elapsed time ...... ... ⏱️ {self.elapsed_time:.2f}")
+        print(f"\rTotal elapsed time ...... ... ⏱️  {self.elapsed_time:.2f}")
         print("\rTotal different extensions  : 🧩", len(self.extensions))
         print("\rTotal duplicated file names : 📝", len(self.duplicated_names))
         print("\rTotal duplicates files ..   : 🔁", len(self.duplicates))
