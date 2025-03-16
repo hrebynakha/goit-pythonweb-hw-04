@@ -167,9 +167,9 @@ class FileCopyManager(FileManagerInfo, FileProgressBar):
             else:
                 self.add_to_copy(aitem)
                 logging.debug("Add to copy new file %s", aitem)
-                tasks.append(asyncio.create_task(
-                    self.copy_file(file=aitem, make_exstesion=True)
-                ))
+                tasks.append(
+                    asyncio.create_task(self.copy_file(file=aitem, make_exstesion=True))
+                )
 
         if tasks:
             await asyncio.gather(*tasks)
