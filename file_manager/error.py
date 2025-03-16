@@ -15,13 +15,13 @@ def handle_error(func):
             return await func(*args, **kwargs)
         except PathNotFound:
             logging.error("Path not found.")
-        except PermissionError:
-            logging.error("Permission denied for this folder.")
+        except PermissionError as e:
+            logging.error("Permission denied for this folder..%s", e)
         except TypeError as e:
             logging.error("Opps...Some type not correct...%s", e)
         except FileNotFoundError as e:
             logging.error("File not found error... %s", e)
-        # except Exception as e:  # pylint: disable=W0703
-        #     logging.error("Opps...Some error happend...%s", e)
+        except Exception as e:  # pylint: disable=W0703
+            logging.error("Opps...Some error happend...%s", e)
 
     return inner
