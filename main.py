@@ -24,7 +24,7 @@ logging.basicConfig(
     handlers=[logging.StreamHandler()],
 )
 
-# logging.getLogger().setLevel(logging.INFO)
+logging.getLogger().setLevel(logging.INFO)
 
 
 @handle_error
