@@ -1,6 +1,7 @@
 """Main copy functional"""
 
 import os
+import time
 import logging
 import itertools
 import asyncio
@@ -15,6 +16,8 @@ class FileCopyManager:
     """Copy file manager"""
 
     def __init__(self, root_path, dest_path):
+        self.start_time =  time.perf_counter()
+        self.elapsed_time = None
         self.files = []
         self.folders = []
         self.extensions = []
@@ -76,12 +79,18 @@ class FileCopyManager:
         if suffix not in self.extensions:
             self.extensions.append(suffix)
         self.files.append(file)
+    
+    def set_end_tme(self, ) -> None:
+        """Add to copy files"""
+        self.elapsed_time = time.perf_counter() - self.start_time
 
     @handle_error
     async def make_extension_folder(self, suffix):
         """Make copies for files and sort by extentios"""
         new_path = AsyncPath(self.dest, suffix)
         await new_path.mkdir(exist_ok=True, parents=True)
+
+        
 
     @handle_error
     async def show_progress(self, tasks, description):
@@ -144,12 +153,14 @@ class FileCopyManager:
         await self.process_folder()
         await self.process_extension()
         await self.process_copy()
+        self.set_end_tme()
         self.show_general_stat()
 
     def show_general_stat(
         self,
     ):
         """Show stat for files"""
+        print(f"\rTotal elapsed time ...... ... ⏱️ {self.elapsed_time:.2f}")
         print("\rTotal different extensions  : 🧩", len(self.extensions))
         print("\rTotal duplicated file names : 📝", len(self.duplicated_names))
         print("\rTotal duplicates files ..   : 🔁", len(self.duplicates))
