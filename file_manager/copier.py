@@ -16,7 +16,7 @@ class FileCopyManager:
     """Copy file manager"""
 
     def __init__(self, root_path, dest_path):
-        self.start_time =  time.perf_counter()
+        self.start_time = time.perf_counter()
         self.elapsed_time = None
         self.files = []
         self.folders = []
@@ -79,8 +79,10 @@ class FileCopyManager:
         if suffix not in self.extensions:
             self.extensions.append(suffix)
         self.files.append(file)
-    
-    def set_end_tme(self, ) -> None:
+
+    def set_end_tme(
+        self,
+    ) -> None:
         """Add to copy files"""
         self.elapsed_time = time.perf_counter() - self.start_time
 
@@ -89,8 +91,6 @@ class FileCopyManager:
         """Make copies for files and sort by extentios"""
         new_path = AsyncPath(self.dest, suffix)
         await new_path.mkdir(exist_ok=True, parents=True)
-
-        
 
     @handle_error
     async def show_progress(self, tasks, description):
